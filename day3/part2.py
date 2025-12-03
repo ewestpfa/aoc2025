@@ -4,12 +4,10 @@ with open("input.txt", "r") as f:
     for i in range(len(lines)):
         lines[i] = lines[i].strip("\n")
 
-sum = 0
+total = 0
 for line in lines:
     indexes = []
     while len(indexes) < 12:
-        backups = []
-        backup_max = 0
         max_val = 0
         max_idx = -1
         if len(indexes) == 0:
@@ -24,7 +22,11 @@ for line in lines:
             found = False
             for j in range(len(indexes)-1, -1, -1):
                 selected_idx = indexes[j]
-                for i in range(selected_idx + 1, len(line)):
+                if j == len(indexes) - 1:
+                    end_idx = len(line)
+                else:
+                    end_idx = indexes[j+1]
+                for i in range(selected_idx + 1, end_idx):
                     num = int(line[i:i+1])
                     if num > max_val and (i not in indexes):
                         max_val = num
@@ -50,7 +52,6 @@ for line in lines:
     for idx in indexes:
         line_val = line_val * 10 + int(line[idx])
 
-    sum += line_val
-    print(line_val)
+    total += line_val
 
-print(sum)
+print(total)
